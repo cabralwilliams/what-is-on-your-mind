@@ -3,6 +3,8 @@ const express = require("express");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
 const sequelize = require("./config/connection");
+const routes = require('./controllers');
+const hbs = exphbs.create({});
 
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
@@ -19,7 +21,11 @@ const sess = {
 
 const app = express();
 
+app.engine('handlebars', hbs.engine);
+//Error was raised when server was started and pages accessed before engine was set
+app.set('view engine', 'handlebars');
 app.use(session(sess));
+app.use(routes);
 
 //Connect to database and server
 sequelize.sync({ force: false }).then(() => {
