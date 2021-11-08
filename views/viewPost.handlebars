@@ -1,0 +1,15 @@
+<div>
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    <div>
+        <span>Posted by {{ post.user.username }}</span><span> on {{ post.created_at }}</span>
+    </div>
+</div>
+{{#if loggedIn}}
+
+{{/if}}
+<div>
+    {{#each post.comments as |comment| }}
+        {{> comments-display comment }}
+    {{/each}}
+</div>

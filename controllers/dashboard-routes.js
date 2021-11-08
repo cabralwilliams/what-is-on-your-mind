@@ -8,7 +8,7 @@ const { User, Post, Comment } = require("../models");
 const authorize = require("../utils/auth");
 
 router.get("/", authorize, (req,res) => {
-
+    res.render("dashboard", { loggedIn: true });
 });
 
 router.get("/edit/:id", authorize, (req,res) => {

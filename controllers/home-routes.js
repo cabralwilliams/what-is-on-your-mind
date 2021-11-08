@@ -23,7 +23,6 @@ router.get("/", (req,res) => {
         console.log(err);
         res.status(500).json(err);
     });
-    
 });
 
 router.get("/login", (req,res) => {
@@ -33,6 +32,58 @@ router.get("/login", (req,res) => {
     }
     
     res.render('login');
+});
+
+router.get("/posts/:id", (req,res) => {
+    Post.findOne({
+        where: {
+            id: req.params.id
+        },
+        //Get the title, content, and timestamp of post
+        attributes: ["title","content","created_at"],
+        include: [
+            {
+                //Include the username of the creator of the post
+                model: User,
+                attributes: ["username"],
+                as: "user"
+            },
+            {
+                //Include any comments related to the post
+                model: Comment,
+                attributes: ["comment_text","created_at"],
+                as: "comment",
+                include: [
+                    {
+                        //Include the username of the person who made the comment
+                        model: User,
+                        as: "user",
+                        attributes: ["username"]
+                    }
+                ]
+            }
+        ]
+    })
+    .then(dbPostData => {
+        if(!dbPostData) {
+            res.status(404).json({ message: 'No post found with this id' });
+            return;
+        }
+
+        // serialize the data
+        const post = dbPostData.get({ plain: true });
+
+        const loggedIn = req.session ? true : false;
+
+        res.render("viewPost", {
+            post,
+            loggedIn: loggedIn
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
 });
 
 module.exports = router;
