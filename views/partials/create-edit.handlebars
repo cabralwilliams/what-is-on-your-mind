@@ -1,0 +1,24 @@
+<section>
+  <h2>{{ postAction }}</h2>
+
+    <form class="post-form" id="post-form">
+        <div>
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" placeholder="{{ postTitle }}"/>
+        </div>
+        <div>
+            <label for="content">Content</label>
+            <textarea id="content" name="content" placeholder="{{ postPlaceholder }}">{{ postContent }}</textarea>
+        </div>
+        <input type="hidden" name="userId" id="userId" value="{{ userId }}" />
+        {{#if isEditing}}
+        <input type="hidden" name="postId" id="postId" value="{{ postId }}" />
+        {{/if}}
+        <button type="submit" class="btn">{{ postAction }}</button>
+    </form>
+</section>
+{{#if isEditing }}
+<script src="/javascript/editPost.js"></script>
+{{else}}
+<script src="/javascript/addPost.js"></script>
+{{/if}}

@@ -5,6 +5,8 @@ const sequelize = require("../../config/connection");
 //Import models
 const { User, Post, Comment } = require("../../models");
 
+const authorize = require("../../utils/auth");
+
 //See all users
 router.get("/users", (req,res) => {
     User.findAll({
@@ -30,10 +32,8 @@ router.get("/users/:id", (req,res) => {
                 attributes: ["id","title","content","created_at","updated_at"]
             },
             {
-                model: Post,
-                attributes: ["title"],
-                through: Comment,
-                as: "commented_post"
+                model: Comment,
+                attributes: ["id","post_id","comment_text"]
             }
         ]
     })
@@ -53,18 +53,40 @@ router.get("/users/:id", (req,res) => {
 //Create new user - fetch needs to be directed to /api/user
 router.post("/users", (req,res) => {
     //Expect req.body = { username, password }
-    User.create({
-        username: req.body.username,
-        password: req.body.password
+    //Check to see if username already exists
+    User.findOne({
+        where: {
+            username: req.body.username
+        },
+        attributes: ["username"]
     })
     .then(dbUserData => {
-        req.session.save(() => {
-            req.session.user_id = dbUserData.id;
-            req.session.username = dbUserData.username;
-            req.session.loggedIn = true;
-        
-            res.json(dbUserData);
-        });
+        if(!dbUserData) {
+            //Create user if username is unique
+            User.create({
+                username: req.body.username,
+                password: req.body.password
+            })
+            .then(dbUserData => {
+                req.session.save(() => {
+                    req.session.user_id = dbUserData.id;
+                    req.session.username = dbUserData.username;
+                    req.session.loggedIn = true;
+                
+                    res.json(dbUserData);
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            });
+        } else if(req.body.username === dbUserData.username) {
+            console.log("==============================");
+            console.log("Duplicate Username!!!!");
+            console.log("==============================");
+            res.status(403).json({ "message": `The username ${req.body.username} already exists in the system.  Usernames must be unique.`})
+            return;
+        }
     })
     .catch(err => {
         console.log(err);
@@ -171,7 +193,62 @@ router.post("/posts", (req,res) => {
 
 //Edit existing post - fetch needs to be directed to /api/post/:id
 router.put("/posts/:id", (req,res) => {
+    Post.update(
+        {
+            title: req.body.title,
+            content: req.body.content
+        },
+        {
+            where: {
+                id: req.params.id
+            }
+        }
+    )
+    .then(updatedPost => {
+        if(!updatedPost) {
+            res.json({ message: "No such post with that id exists."});
+            return;
+        }
+        res.json(updatedPost);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+});
 
+//Delete existing post
+router.delete("/posts/:id", (req,res) => {
+    Comment.destroy({
+        where: {
+            post_id: req.params.id
+        }
+    })
+    .then(dbCommentData => {
+        if(!dbCommentData) {
+            return;
+        }
+        Post.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(dbPostData => {
+            if(!dbPostData) {
+                res.status(404).json({ message: 'No post found with this id' });
+                return;
+            }
+            res.json(dbPostData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
 });
 
 //See all comments

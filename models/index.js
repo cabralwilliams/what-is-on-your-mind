@@ -37,18 +37,22 @@ Post.hasMany(Comment, {
 });
 
 //Many users can comment on the same post
+/*
 Post.belongsToMany(User, {
     through: Comment,
     as: "commented_post",
     foreignKey: "post_id"
 });
+*/
 
 //The same user can comment on many posts
+/*
 User.belongsToMany(Post, {
     through: Comment,
     as: "commented_post",
     foreignKey: "user_id"
 });
+*/
 
 //Export the models
 module.exports = { User, Post, Comment };

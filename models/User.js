@@ -33,7 +33,7 @@ User.init(
             allowNull: false,
             validate: {
                 //Password must be at least 8 characters
-                len: [8],
+                len: [6],
                 //Password can only be letters and numbers - might adjust
                 isAlphanumeric: true
             }
