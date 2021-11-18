@@ -8,7 +8,7 @@
   This application is a fully funtional blog site.  It allows a user to create an account, and then once that account is created and the user logged on, the user can create his or her own blog posts and comment on blog posts created by other registered users.  The user is also able to delete prior posts once logged in.
   
   ## Link
-  tobeincludedlater
+  [What Is On Your Mind](https://quiet-woodland-72442.herokuapp.com/)
   
   ## Table of Contents
   
