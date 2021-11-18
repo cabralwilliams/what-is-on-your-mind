@@ -4,15 +4,16 @@ const session = require("express-session");
 const exphbs = require("express-handlebars");
 const sequelize = require("./config/connection");
 const routes = require('./controllers');
-const hbs = exphbs.create({});
+const helpers = require("./utils/helpers");
+const hbs = exphbs.create({ helpers });
 const path = require("path");
 
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
-//Set maxAge of cookie - for development, set to 5 minutes - when live, set to an hour?
+//Set maxAge of cookie - for development, set to 5 minutes (300000)- when live, set to an hour (3600000)?
 const sess = {
     secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: 300000 },
+    cookie: { maxAge: 3600000 },
     resave: false,
     saveUninitialized: true,
     store: new SequelizeStore({

@@ -5,9 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What Is On Your Mind?!?</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
     <body>
-        <div>
+        <div class="wrapper">
             <header>
                 <h1>
                     <a href="/">What Is On Your Mind?!?</a>
@@ -25,11 +26,12 @@
                 {{{ body }}}
             </main>
             <footer>
-
+                <h2>What Is On My Mind?!? - <span id="my_mind"></span></h2>
             </footer>
         </div>
         {{#if loggedIn}}
             <script src="/javascript/logout.js"></script>
         {{/if}}
+        <script src="/javascript/footer.js"></script>
     </body>
 </html>

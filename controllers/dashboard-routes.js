@@ -80,6 +80,7 @@ router.get("/edit/:id", authorize, (req,res) => {
             if(canEdit) {
                 post.postAction = "Edit Post";
                 post.postTitle = post.title;
+                post.postValue = post.title;
                 post.postPlaceholder = post.content;
                 post.postContent = post.content;
                 post.isEditing = true;
@@ -107,7 +108,7 @@ router.get("/edit/:id", authorize, (req,res) => {
 //Will be reached when user clicks on create post option from dashboard
 router.get("/create", authorize, (req,res) => {
     const isEditing = false;
-    const post = { postTitle: "On My Mind...", postAction: "Create New Post", postPlaceholder: "What is on your mind?!?", postContent: "", userId: req.session.user_id, isEditing: false };
+    const post = { postTitle: "On My Mind...", postAction: "Create New Post", postPlaceholder: "What is on your mind?!?", postContent: "", userId: req.session.user_id, isEditing: false, postValue: "On My Mind..." };
     res.render("create", {
         post,
         loggedIn: true,

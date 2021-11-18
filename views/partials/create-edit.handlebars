@@ -1,10 +1,9 @@
-<section>
-  <h2>{{ postAction }}</h2>
-
-    <form class="post-form" id="post-form">
+<section class="center-element column-flex">
+    <form class="website-form" id="post-form">
+        <h2>{{ postAction }}</h2>
         <div>
             <label for="title">Title</label>
-            <input type="text" id="title" name="title" placeholder="{{ postTitle }}"/>
+            <input type="text" id="title" name="title" placeholder="{{ postTitle }}" value="{{ postValue }}"/>
         </div>
         <div>
             <label for="content">Content</label>
@@ -14,7 +13,7 @@
         {{#if isEditing}}
         <input type="hidden" name="postId" id="postId" value="{{ postId }}" />
         {{/if}}
-        <button type="submit" class="btn">{{ postAction }}</button>
+        <button type="submit"  class="site-btn-1">{{ postAction }}</button>
     </form>
 </section>
 {{#if isEditing }}

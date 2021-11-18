@@ -1,7 +1,8 @@
-<div><a href="/dashboard/create">Create New Post</a></div>
+<div class="column-flex">
+<div class="top-bottom-10"><a href="/dashboard/create" class="color5">Create New Post</a></div>
 {{#if hasPosts }}
-<h3>What Was Previously On Your Mind</h3>
-<ol>
+<h3 class="color5 shadowed-text">What Was Previously On Your Mind</h3>
+<ol class="post-list">
 {{#each posts as |post|}}
     <li>
         {{> post-title post }}
@@ -9,3 +10,4 @@
 {{/each}}
 </ol>
 {{/if}}
+</div>

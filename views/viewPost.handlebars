@@ -1,27 +1,31 @@
-<div>
-    <h2>{{ post.title }}</h2>
+<div class="column-flex">
+<div class="column-flex post-main">
+    <h2 class="post-title">{{ post.title }}</h2>
     <p>{{ post.content }}</p>
     <div>
-        <span>Posted by {{ post.user.username }}</span><span> on {{ post.created_at }}</span>
+        <span>Posted by <span class="username">{{ post.user.username }}</span><span> on {{ format_date post.created_at }}</span>
     </div>
 </div>
 {{#if loggedIn}}
-<div>
-    <h3>What do you think?!?</h3>
-    <form id="add-comment">
+<div class="column-flex">
+    <form id="add-comment" class="website-form column-flex">
+        <h2>What do you think?!?</h2>
         <input type="hidden" value="{{ post.id }}" name="post_id" id="post_id" />
         <input type="hidden" value="{{ user_id }}" name="user_id" id="user_id" />
-        <textarea id="comment_text" name="comment_text" placeholder="What do you think?!?"></textarea>
         <div>
-            <button type="submit">Submit</button>
+            <textarea id="comment_text" name="comment_text" placeholder="What do you think?!?"></textarea>
+        </div>
+        <div>
+            <button type="submit" class="site-btn-1">Submit</button>
         </div>
     </form>
 </div>
 {{/if}}
-<div>
+<div class="displayed-comments">
     {{#each post.comments as |comment| }}
         {{> comments-display comment }}
     {{/each}}
+</div>
 </div>
 {{#if loggedIn}}
 <script src="/javascript/postComment.js"></script>
