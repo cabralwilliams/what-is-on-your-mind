@@ -174,4 +174,9 @@ router.get("/create", (req,res) => {
     }
 });
 
+//Fake post for photo
+router.get("/Caesar", (req,res) => {
+    res.render("fakePost");
+});
+
 module.exports = router;
