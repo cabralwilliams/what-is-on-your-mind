@@ -2,7 +2,7 @@
 
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-  ![Beware the Ides of March!](.public/images/caesar_screen.jpg)
+  ![Beware the Ides of March!](./public/images/caesar_screen.jpg)
 
   ## Description
   This application is a fully funtional blog site.  It allows a user to create an account, and then once that account is created and the user logged on, the user can create his or her own blog posts and comment on blog posts created by other registered users.  The user is also able to delete prior posts once logged in.
