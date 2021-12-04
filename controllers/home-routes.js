@@ -8,7 +8,13 @@ const { User, Post, Comment } = require("../models");
 router.get("/", (req,res) => {
     
     Post.findAll({
-        attributes: ["id","title", "created_at"]
+        attributes: ["id","title", "created_at"],
+        include: [
+            {
+                model: User,
+                attributes: ["username"]
+            }
+        ]
     })
     .then(dbPostData => {
         // pass a single post object into the homepage template

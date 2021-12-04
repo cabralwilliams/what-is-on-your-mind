@@ -87,8 +87,17 @@ h3.shadowed-text {
 
 .post-list {
     margin-top: 15px;
-    margin-left: 15px;
     list-style-type: none;
+}
+
+.post-list article:nth-child(even) {
+    background-color: var(--color4);
+}
+
+.post {
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .post-title {

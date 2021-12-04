@@ -1,6 +1,6 @@
 <article class="post">
     <div class="title">
         <a href="/{{ routeAddition }}/{{ id }}" class="post-title">{{ title }}</a>
-        <span>({{format_date created_at}})</span>
+        <span>(Posted {{format_date created_at}} by </span><span class="username">{{ user.username }}</span><span>)</span>
     </div>
 </article>
