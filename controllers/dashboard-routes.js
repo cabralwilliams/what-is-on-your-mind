@@ -23,6 +23,11 @@ router.get("/", authorize, (req,res) => {
         //Assign variable hasPosts based on whether user has made any posts
         const hasPosts = dbPostData.length === 0 ? false : true;
         let posts = dbPostData.map(post => post.get({ plain: true }));
+        posts = posts.map(post => {
+            post.user = {};
+            post.user.username = req.session.username;
+            return post;
+        });
         posts.hasPosts = hasPosts;
 
         //Add the edit routeAddition to each post
