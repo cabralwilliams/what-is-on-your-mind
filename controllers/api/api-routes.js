@@ -192,7 +192,7 @@ router.post("/posts", (req,res) => {
 });
 
 //Edit existing post - fetch needs to be directed to /api/post/:id
-router.put("/posts/:id", (req,res) => {
+router.put("/posts/:id", authorize, (req,res) => {
     Post.update(
         {
             title: req.body.title,
@@ -218,7 +218,7 @@ router.put("/posts/:id", (req,res) => {
 });
 
 //Delete existing post
-router.delete("/posts/:id", (req,res) => {
+router.delete("/posts/:id", authorize, (req,res) => {
     Comment.destroy({
         where: {
             post_id: req.params.id
@@ -265,6 +265,20 @@ router.post("/comments", (req,res) => {
         user_id: req.body.user_id
     })
     .then(dbCommentData => res.json(dbCommentData))
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+});
+
+//Delete a specific comment
+router.delete("/comments/:id", authorize, (req, res) => {
+    Comment.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(dbResponse => res.json(dbResponse))
     .catch(err => {
         console.log(err);
         res.status(500).json(err);

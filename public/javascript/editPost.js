@@ -42,3 +42,20 @@ async function deletePost(event) {
 }
 
 document.querySelector("#delete-form").addEventListener("submit", deletePost);
+
+async function deleteComment(event) {
+    event.preventDefault();
+
+    const el = event.target;
+    const commentId = parseInt(el.getAttribute('data-commentId'));
+
+    const response = await fetch(`/api/comments/${commentId}`, {
+        method: "DELETE"
+    });
+
+    if(response.ok) {
+        window.location.reload();
+    } else {
+        alert(response.statusText);
+    }
+}

@@ -1,0 +1,7 @@
+<div class="comment-div">
+    <div>
+        <span class="username">{{ user.username }}</span><span> said on </span><span>{{ format_date created_at }}</span>
+    </div>
+    <blockquote class="comment-text">{{ comment_text }}</blockquote>
+    <button data-commentId="{{ id }}" onclick="deleteComment(event)" class="site-btn-1">Delete Comment</button>
+</div>

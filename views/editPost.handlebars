@@ -2,3 +2,8 @@
     <button type="submit" class="site-btn-1">Delete Post</button>
 </form>
 {{> create-edit post }}
+<div class="displayed-comments column-flex center-element">
+    {{#each post.comments as |comment| }}
+        {{> manage-comments comment }}
+    {{/each}}
+</div>

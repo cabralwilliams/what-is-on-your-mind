@@ -60,7 +60,7 @@ router.get("/edit/:id", authorize, (req,res) => {
             {
                 //Include the comments to the post
                 model: Comment,
-                attributes: ["comment_text","created_at"],
+                attributes: ["comment_text","created_at","id"],
                 include: [
                     {
                         //Include the username of the person who made the comment
